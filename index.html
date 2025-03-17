@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新日誌</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .update-log {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .update-item {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            opacity: 0;  /* 初始透明 */
+            transform: translateY(20px);  /* 初始位置向下 */
+            animation: fadeIn 0.8s ease-out forwards;  /* 動畫效果 */
+        }
+        .update-item:last-child {
+            border-bottom: none;
+        }
+        .date {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* 淡入動畫 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📜 更新日誌</h1>
+    
+    <div class="update-log" id="updateLog">
+        <div class="update-item">
+            <span class="date">2025.3.17</span> - 加入段一國文
+        </div>
+    </div>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let updateLog = document.getElementById("updateLog");
+
+            // 新增更新項目
+            let updates = [
+                { date: "2025.03.17", content: "加入段一國文" },
+                        // 這是新的內容
+            ];
+            
+
+            // 按日期排序（最新的在最上面）
+            updates.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // 清空舊內容
+            updateLog.innerHTML = "";
+
+            // 重新加入排序後的更新項目
+            updates.forEach(update => {
+                let newUpdate = document.createElement("div");
+                newUpdate.classList.add("update-item");
+                newUpdate.innerHTML = `<span class="date">${update.date}</span> - ${update.content}`;
+                updateLog.appendChild(newUpdate);
+            });
+        });
+
+        
+
+        function getTodayDate() {
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = String(today.getMonth() + 1).padStart(2, '0'); // 補0
+            let day = String(today.getDate()).padStart(2, '0'); // 補0
+            return `${year}.${month}.${day}`;
+        }
+    </script>
+
+
+</body>
+</html>
