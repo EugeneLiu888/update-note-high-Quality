@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新日誌</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .update-log {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .update-item {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            opacity: 0;  /* 初始透明 */
+            transform: translateY(20px);  /* 初始位置向下 */
+            animation: fadeIn 0.8s ease-out forwards;  /* 動畫效果 */
+        }
+        .update-item:last-child {
+            border-bottom: none;
+        }
+        .date {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* 淡入動畫 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .decoded-message {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .decoded-message button {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📜 更新日誌</h1>
+    
+    <div class="update-log" id="updateLog">
+        <div class="update-item">
+            <span class="date">2025.3.17</span> - 加入段一國文
+        </div>
+    </div>
+    
+    <div class="decoded-message">
+        <p id="message-text"></p>
+        <a href="https://chatgpt.com/" target="_blank">
+            <button>請去ChatGPT問</button>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let updateLog = document.getElementById("updateLog");
+
+            // 新增更新項目
+            let updates = [
+                { date: "2025.03.17", content: "加入段一國文" },
+                { date: "2025.03.21", content: "加入段一英文聽力稿" },
+                { date: "2025.03.22", content: "加入段一國文100字解答" },
+                { date: "OUTTA TIME", content: "沒關係" },
+                
+                        // 這是新的內容
+            ];
+            
+
+            // 按日期排序（最新的在最上面）
+            updates.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // 清空舊內容
+            updateLog.innerHTML = "";
+
+            // 重新加入排序後的更新項目
+            updates.forEach(update => {
+                let newUpdate = document.createElement("div");
+                newUpdate.classList.add("update-item");
+                newUpdate.innerHTML = `<span class="date">${update.date}</span> - ${update.content}`;
+                updateLog.appendChild(newUpdate);
+            });
+
+            let message = [65, 97, 114, 111, 110, 32, 119, 111, 110, 39, 116, 32, 98, 101, 32, 109, 121, 32, 98, 101, 115, 116, 32, 102, 114, 105, 101, 110, 100, 32, 97, 110, 121, 109, 111, 114, 101];
+            let pythonCode = `message = ${JSON.stringify(message)}\ndecoded_message = ''.join(chr(i) for i in message)\nprint(decoded_message)`;
+            document.getElementById("message-text").textContent = pythonCode;
+        });
+
+        function copyMessage() {
+            let messageText = document.getElementById("message-text").textContent;
+            navigator.clipboard.writeText(messageText).then(() => {
+                alert("已複製訊息！");
+            });
+        }
+    </script>
+
+</body>
+</html>
