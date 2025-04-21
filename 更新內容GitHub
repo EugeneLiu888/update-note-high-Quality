@@ -1,0 +1,7 @@
+git add .
+git commit -m "xxxxx"
+git pull --rebase origin main  # 確保與 GitHub 同步
+git push
+ 
+強制更新
+git push --force origin main
