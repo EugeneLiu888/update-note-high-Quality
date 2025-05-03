@@ -5,64 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>更新日誌</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        .update-log {
-            max-width: 600px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .update-item {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            opacity: 0;  /* 初始透明 */
-            transform: translateY(20px);  /* 初始位置向下 */
-            animation: fadeIn 0.8s ease-out forwards;  /* 動畫效果 */
-        }
-        .update-item:last-child {
-            border-bottom: none;
-        }
-        .date {
-            font-weight: bold;
-            color: #555;
+        .month-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        /* 淡入動畫 */
-        @keyframes fadeIn {
-            from {
+        .month-header {
+            font-size: 20px; /* 改為平常小字體 */
+            font-weight: bold;
+            color: #fff;
+            background: rgba(0, 150, 255, 0.6); /* 更柔和的藍色 */
+            padding: 14px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
+            position: relative;
+        }
+
+        /* 調整 month-header 點擊後變大字體 */
+        .month-header.clicked {
+            font-size: 28px; /* 點擊時變大 */
+            transform: none;
+            transition: all 0.3s ease;
+        }
+
+        /* 增加底部邊框顏色強化效果 */
+        .month-header::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: #008CBA; /* 藍色底邊 */
+            border-radius: 0 0 30px 30px;
+            margin-top: 10px;
+        }
+
+        .month-header:hover {
+            transform: scale(1.05);
+        }
+
+        .month-content {
+            display: block;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .month-content.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        @keyframes slideIn {
+            0% {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
-            to {
+            100% {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e5ecf4 0%, #f9fbfd 100%);
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+            backdrop-filter: blur(15px);
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang TC", "Segoe UI", "Roboto", "Arial", sans-serif;
+            margin-bottom: 40px;
+            text-align: left;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.6), rgba(100, 210, 255, 0.3));
+            backdrop-filter: blur(25px);
+            border-radius: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .update-log {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 40px 20px;
+            gap: 40px;
+            position: relative;
+            align-items: flex-start;
+        }
+        .timeline {
+            /* 可用於未來擴充，暫不需內容 */
+        }
+        .update-log::before {
+            display: none;
+        }
+        .update-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            min-width: 240px;
+            text-align: left;
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .update-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 18px;
+            width: 14px;
+            height: 14px;
+            background-color: rgba(0, 122, 255, 0.6);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 2px rgba(200, 200, 200, 0.4);
+            z-index: 1;
+            transform: none;
+        }
+        .update-item .date {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .update-item .content {
+            font-size: 14px;
+        }
         .decoded-message {
-            font-size: 12px;
-            color: #777;
+            font-size: 14px;
+            color: #555;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(12px);
         }
         .decoded-message button {
             background-color: #008CBA;
             color: white;
             border: none;
-            padding: 5px 10px;
-            font-size: 12px;
+            padding: 8px 16px;
+            font-size: 14px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -98,16 +197,80 @@
             // 按日期排序（最新的在最上面）
             updates.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+            // 依月份分組
+            let groupedUpdates = {};
+
+            updates.forEach(update => {
+                let month = update.date.slice(0, 7); // 取得年月 (YYYY.MM)
+                if (!groupedUpdates[month]) {
+                    groupedUpdates[month] = [];
+                }
+                groupedUpdates[month].push(update);
+            });
+
+            // 可選：方便除錯
+            console.log(groupedUpdates);
             // 清空舊內容
             updateLog.innerHTML = "";
 
-            // 重新加入排序後的更新項目
-            updates.forEach(update => {
-                let newUpdate = document.createElement("div");
-                newUpdate.classList.add("update-item");
-                newUpdate.innerHTML = `<span class="date">${update.date}</span> - ${update.content}`;
-                updateLog.appendChild(newUpdate);
-            });
+            // 以月份分組顯示並預設隱藏內容
+            for (let month in groupedUpdates) {
+                // 先按日期升序排序（最早到最新）
+                groupedUpdates[month].sort((a, b) => new Date(a.date) - new Date(b.date)); // 確保日期從最早到最新排序
+
+                let monthContainer = document.createElement("div");
+                monthContainer.classList.add("month-group");
+
+                let monthHeader = document.createElement("div");
+                monthHeader.classList.add("month-header");
+                monthHeader.textContent = `${month}`;
+                monthContainer.appendChild(monthHeader);
+
+                let innerContainer = document.createElement("div");
+                innerContainer.classList.add("month-content");
+                innerContainer.style.display = "none";
+
+                groupedUpdates[month].forEach(update => {
+                    let newUpdate = document.createElement("div");
+                    newUpdate.classList.add("update-item");
+                    newUpdate.innerHTML = `
+                        <div class="date">${update.date}</div>
+                        <div class="content">${update.content}</div>
+                    `;
+                    innerContainer.appendChild(newUpdate);
+                });
+
+                monthHeader.addEventListener("click", () => {
+                    let isVisible = innerContainer.style.display === "flex";
+                    if (!isVisible) {
+                        innerContainer.style.display = "flex";
+                        setTimeout(() => {
+                            innerContainer.classList.add("visible");
+                        }, 20);
+                    } else {
+                        innerContainer.classList.remove("visible");
+                        setTimeout(() => {
+                            innerContainer.style.display = "none";
+                        }, 300);
+                    }
+                    
+                    // 點擊後縮小字體，並顯示內容
+                    if (!isVisible) {
+                        monthHeader.classList.add("clicked");
+                    } else {
+                        monthHeader.classList.remove("clicked");
+                    }
+
+                    if (!isVisible) {
+                        // 確保每次展開時日期是按順序顯示
+                        let updatesInContainer = innerContainer.querySelectorAll('.update-item');
+                        updatesInContainer.forEach(item => innerContainer.appendChild(item));
+                    }
+                });
+
+                monthContainer.appendChild(innerContainer);
+                updateLog.appendChild(monthContainer);
+            }
 
             let message = [65, 97, 114, 111, 110, 32, 119, 111, 110, 39, 116, 32, 98, 101, 32, 109, 121, 32, 98, 101, 115, 116, 32, 102, 114, 105, 101, 110, 100, 32, 97, 110, 121, 109, 111, 114, 101];
             let pythonCode = `message = ${JSON.stringify(message)}\ndecoded_message = ''.join(chr(i) for i in message)\nprint(decoded_message)`;
