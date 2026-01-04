@@ -13,24 +13,28 @@
         }
 
         .month-header {
-            font-size: 20px; /* 改為平常小字體 */
+            font-size: 20px;
             font-weight: bold;
-            color: #fff;
-            background: rgba(0, 150, 255, 0.6); /* 更柔和的藍色 */
+            color: white;
+            background: rgba(0, 150, 255, 0.35);
             padding: 14px 28px;
-            border-radius: 30px;
+            border-radius: 18px;
             cursor: pointer;
             margin-bottom: 18px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            font-family: "Segoe UI", "PingFang TC", "Helvetica Neue", Arial, sans-serif;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: background 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
         }
-
-        /* 調整 month-header 點擊後變大字體 */
+        .month-header:hover {
+            background: rgba(0, 150, 255, 0.55);
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.5);
+        }
         .month-header.clicked {
-            font-size: 28px; /* 點擊時變大 */
+            font-size: 28px;
             transform: none;
             transition: all 0.3s ease;
         }
@@ -44,10 +48,6 @@
             background: #008CBA; /* 藍色底邊 */
             border-radius: 0 0 30px 30px;
             margin-top: 10px;
-        }
-
-        .month-header:hover {
-            transform: scale(1.05);
         }
 
         .month-content {
@@ -153,15 +153,30 @@
             padding: 15px;
             border-radius: 15px;
             backdrop-filter: blur(12px);
+            font-family: "Segoe UI", "PingFang TC", "Helvetica Neue", Arial, sans-serif;
         }
         .decoded-message button {
-            background-color: #008CBA;
+            background: rgba(0, 140, 186, 0.4);
             color: white;
             border: none;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: "Segoe UI", "PingFang TC", "Helvetica Neue", Arial, sans-serif;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 12px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .decoded-message button:hover {
+            background: rgba(0, 140, 186, 0.6);
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+        }
+        .decoded-message button:active {
+            transform: scale(0.95);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2) inset;
         }
     </style>
 </head>
@@ -189,7 +204,8 @@
                 { date: "2025.4.21", content: "Meta認證藍勾勾（不知道會不會過拉）" },
                 { date: "2025.5.2", content: "加入段二國文100字解答" } ,
                 { date: "2025.5.24", content: "推出全新班網" },
- 
+                { date: "2025.9.1", content: "移除部分內容並改善已知錯誤"},
+                { date: "2025.9.1", content: "改善更新日誌的使用體驗，更貼近即將發表的iOS 26正式版Liquid Glass風格" }
                 
                 
 
